@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+ <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+<!--    <h1>{{ user2.name }}</h1>-->
+<br>
+<!--    {{ messages_send.all }}-->
+<div class="card purple lighten-4 chat-room" style="width: 60%">
+  <div class="card-body" >
+    <h2>{{ chatroom }}</h2>
+      <div class="col-md-6 col-xl-8 pr-md-4 px-lg-auto px-0">
+
+        <div class="chat-message">
+            <ul class="list-unstyled chat">
+        {% for msg in messages %}
+            {% if msg.user_sender == user_sender %}
+                <li class="d-flex justify-content-between mb-4" style="text-align: left">
+              <div class="chat-body white p-3 ml-2 z-depth-1">
+                <div class="header">
+                  <strong class="primary-font">{{ msg.user_sender }}</strong>
+                  <small class="glyphicon glyphicon-time"><i class="far fa-clock"></i> {{ msg.date_posted }}</small>
+                </div>
+                <hr class="w-100">
+                <p class="mb-0">
+                    {{ msg.text }}
+                </p>
+              </div>
+                    </li>
+
+<!--<p style="text-align:right"><b>{{ msg.user_sender }}</b>:<br>{{ msg.text }}</p>-->
+
+            {% else %}
+                <li class="d-flex justify-content-between mb-4" style="text-align: right">
+              <div class="chat-body white p-3 ml-2 z-depth-1">
+                <div class="header">
+
+                  <small class="pull-right text-muted"><i class="far fa-clock"></i> {{ msg.date_posted }}</small>
+                    <strong class="primary-font">{{ msg.user_sender }}</strong>
+                </div>
+                <hr class="w-100">
+                <p class="mb-0">
+                    {{ msg.text }}
+                </p>
+              </div>
+                    </li>
+
+<!-- <p style="text-align:left"><b></b>:<br>{{ msg.text }}</p>-->
+
+            {% endif %}
+        {% endfor %}
+<!--        {% for msg in messages_received.all %}-->
+<!--            <p>From: {{ msg.user1 }}</p>-->
+<!--            <p>To: {{ msg.user2 }}</p>-->
+<!--            <p>{{ msg }}</p>-->
+<!--            <hr>-->
+<!--        {% endfor %}-->
+
+                <form method="post">
+            {% csrf_token %}
+<!--            <input name="user_sender" type="hidden" value="{{ user_sender }}">-->
+            <input name="chatroom" type="hidden" value="{{ chatroom }}">
+            <input name="text" type="text">
+            <input class="btn btn-success" type="submit" value="Send message">
+        </form>
+         </ul>
+        </div>
+    </div>
+       </div>
+    </div>
+{% endblock %}
+
+

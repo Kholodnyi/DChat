@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}<link rel="stylesheet" href="{% static 'css/chat.css' %}">{% endblock %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+<!--    <h1>{{ user2.name }}</h1>-->
+<br>
+<!--    {{ messages_send.all }}-->
+<div style="margin-left: 40%; margin-right: 40%">
+  <div>
+    <h2>{{ chatroom }}</h2>
+      <div>
+
+
+            <ul class="list-unstyled chat">
+        {% for msg in messages %}
+            {% if msg.user_sender == user_sender %}
+
+                                <li class="left clearfix"><span class="chat-img pull-right">
+<!--                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />-->
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header" style="text-align: right">
+                                   <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{ msg.date_posted }}</small>
+                                    <strong class="pull-right primary-font">{{ msg.user_sender }}</strong>
+                                </div>
+                                <p style="text-align: right">
+                                    {{ msg.text }}
+                                </p>
+                            </div>
+                        </li>
+
+<!--<p style="text-align:right"><b>{{ msg.user_sender }}</b>:<br>{{ msg.text }}</p>-->
+
+            {% else %}
+
+                <li class="left clearfix"><span class="chat-img pull-left">
+<!--                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />-->
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{ msg.user_sender }}</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>{{ msg.date_posted }}</small>
+                                </div>
+                                <p style="text-align: left">
+                                    {{ msg.text }}
+                                </p>
+                            </div>
+                        </li>
+
+
+
+<!-- <p style="text-align:left"><b></b>:<br>{{ msg.text }}</p>-->
+
+            {% endif %}
+        {% endfor %}
+<!--        {% for msg in messages_received.all %}-->
+<!--            <p>From: {{ msg.user1 }}</p>-->
+<!--            <p>To: {{ msg.user2 }}</p>-->
+<!--            <p>{{ msg }}</p>-->
+<!--            <hr>-->
+<!--        {% endfor %}-->
+
+                <form method="post">
+            {% csrf_token %}
+<!--            <input name="user_sender" type="hidden" value="{{ user_sender }}">-->
+            <input name="chatroom" type="hidden" value="{{ chatroom }}">
+            <input name="text" type="text">
+            <input class="btn btn-success" type="submit" value="Send">
+        </form>
+         </ul>
+    </div>
+       </div>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="chat.css">
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="chat.css">
+<!--    <link rel="stylesheet" href="{% static 'css/chat.css' %}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+
+<div class="container content">
+  <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-header">Chat of {{ chatroom.user1 }} and {{ chatroom.user2 }}</div>
+            <div class="card-body height3">
+              <ul class="chat-list">
+                {% for msg in messages %}
+                  {% if msg.user_sender == user_sender %}
+
+                    <li class="out">
+                        <div class="chat-body">
+                            <div class="chat-message">
+                                <h5>{{ msg.user_sender }}</h5>
+                                <p>{{ msg.text }}</p>
+                                <small class="date-posted">{{ msg.date_posted }}</small>
+                            </div>
+                        </div>
+                    </li>
+
+                  {% else %}
+
+                    <li class="in">
+                        <div class="chat-body">
+                            <div class="chat-message">
+                                <h5>{{ msg.user_sender }}</h5>
+                                <p>{{ msg.text }}</p>
+                                <small class="date-posted">{{ msg.date_posted }}</small>
+                            </div>
+                        </div>
+                    </li>
+
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+          <form method="post">
+            {% csrf_token %}
+            <input name="chatroom" type="hidden" value="{{ chatroom }}">
+            <input class="new-msg" name="text" type="text">
+            <input class="send-msg" type="submit" value="Send" >
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

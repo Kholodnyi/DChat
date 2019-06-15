@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+    <h3 style="color:black;">Hi, {{ user.username }}!</h3>
+    <div class="row">
+        {% for user_other in users %}
+            {% if user != user_other %}
+<!--                <p>{{ user.chat.chat_id }}</p>-->
+<!--        <br>-->
+<!--                <p>{{ user_other.chat.chat_id }}</p>-->
+                <div class="card" style="width: 18rem;">
+<!--  <img src="{{ item.photo.all.0 }}" class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user_other.username }}</h5>
+<!--    <p class="card-text">{{ item.description }}</p> -->
+                        {% for chatroom in chatrooms %}
+                                {% if chatroom.user1 == user and chatroom.user2 == user_other or chatroom.user1 == user_other and chatroom.user2 == user %}
+                                    <a href="/chat/{{ chatroom.chat_id }}" class="btn btn-primary">To chat</a>
+                                {% endif %}
+                        {% endfor %}
+                            <a href="/chat/{{ user_other.pk }}" class="btn btn-primary">To messages</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

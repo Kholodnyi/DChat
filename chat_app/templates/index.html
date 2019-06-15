@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+    <div class="main-block">
+    <div class="row">
+    <ul class="chat-list">
+        {% for user_other in users1 %}
+            <li>
+            <div class="card" style="width: 12rem; background: #373c42">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_other.username }}</h5>
+                    {% for chatroom in chatroom1 %}
+                        {% if user_other == chatroom.user2 %}
+                            <a href="/chat/{{ chatroom.chat_id }}" class="btn btn-primary">To messages</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            </li>
+        {% endfor %}
+
+        {% for user_other in users2 %}
+            <li>
+            <div class="card" style="width: 12rem; background: #373c42">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_other.username }}</h5>
+                    {% for chatroom in chatroom2 %}
+                        {% if user_other == chatroom.user1 %}
+                            <a href="/chat/{{ chatroom.chat_id }}" class="btn btn-primary">To messages</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            </li>
+        {% endfor %}
+
+        {% for user_other in users3 %}
+                <li>
+                <div class="card" style="width: 12rem; background: #888890">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user_other.username }}</h5>
+                        <a href="/chat/{{ user_other.pk }}" class="btn btn-primary">To messages</a>
+                    </div>
+                </div>
+                </li>
+        {% endfor %}
+    </ul>
+    </div>
+    </div>
+{% endif %}
+{% endblock %}

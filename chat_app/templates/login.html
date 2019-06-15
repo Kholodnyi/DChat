@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+    <style>
+        form {
+            margin: 5px;
+        }
+    </style>
+    <form action="" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputName">Name</label>
+            <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword">Password</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+{% endblock %}
